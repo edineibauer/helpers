@@ -5,8 +5,11 @@
  * Reponsável por carregar o template, povoar e exibir a view, povoar e incluir arquivos PHP no sistem.
  * Arquitetura MVC!
  *
- * @copyright (c) 2014, Edinei J. Bauer NENA PRO
+ * @copyright (c) 2017, Edinei J. Bauer
  */
+
+namespace Helpers;
+
 class View
 {
 

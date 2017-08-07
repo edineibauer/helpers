@@ -3,8 +3,11 @@
  * esta classe será responsável por enviar um post request para outro site
  * com parâmetros
  *
- * @author Edinei J. Bauer <edinei@ontab.com.br>
+ * @author Edinei J. Bauer 2017 <edineibauer@gmail.com>
+ *
  */
+
+namespace Helpers;
 
 class PostRequest {
 

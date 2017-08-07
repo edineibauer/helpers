@@ -1,5 +1,5 @@
 {
-  "name": "helpers/helpers",
+  "name": "conn/helpers",
   "description": "Classes de ajuda em geral para diversas tarefas secundárias",
   "type": "library",
   "license": "MIT",

@@ -6,6 +6,9 @@
  *
  * @copyright (c) 2017, Edinei J. Bauer
  */
+
+namespace Helpers;
+
 class Helper
 {
 
