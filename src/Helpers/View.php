@@ -27,11 +27,11 @@ class View
     /**
      * <b>Carregar Template View:</b> Dentro da pasta do seu template, crie a pasta _tpl e armazene as
      * template_views.tpl.html. Depois basta informar o APENAS O NOME do arquivo para carregar o mesmo!
-     * @param STRING $Template = Nome_do_arquivo
+     * @param STRING $template = Nome_do_arquivo
      */
-    public function load($Template)
+    public function load($template)
     {
-        $this->template = file_get_contents($this->base . DIRECTORY_SEPARATOR . (string)$Template . '.html');
+        $this->template = file_get_contents($this->base . (!preg_match('/\/$/i', $this->base) ? DIRECTORY_SEPARATOR : "") . (string)$template . '.html');
         return $this->template;
     }
 
@@ -46,36 +46,27 @@ class View
     /**
      * <b>Exibir Template View:</b> Execute um foreach com um getResult() do seu model e informe o envelope
      * neste método para configurar a view. Não esqueça de carregar a view acima do foreach com o método Load.
-     * @param array $Data = Array com dados obtidos
-     * @param View $View = Template carregado pelo método Load()
+     * @param array $data = Array com dados obtidos
+     * @param View $view = Template carregado pelo método Load()
      */
-    public function show(array $Data, $View)
+    public function show(array $data, $view)
     {
-        $this->setKeys($Data);
+        $this->setKeys($data);
         $this->setValues();
-        $this->showView($View);
-    }
-
-    public function retornaView(array $Data, $View)
-    {
-        $this->setKeys($Data);
-        $this->setValues();
-
-        $this->template = $View;
-        return str_replace($this->keys, $this->values, $this->template);
+        $this->showView($view);
     }
 
     /**
      * <b>Retorna Template View:</b> Execute um foreach com um getResult() do seu model e informe o envelope
      * neste método para configurar a view. Não esqueça de carregar a view acima do foreach com o método Load.
-     * @param array $Data = Array com dados obtidos
-     * @param View $View = Template carregado pelo método Load()
+     * @param array $data = Array com dados obtidos
+     * @param View $view = Template carregado pelo método Load()
      */
-    public function retorna(array $Data, $View)
+    public function getShow(array $data, $view)
     {
-        $this->setKeys($Data);
+        $this->setKeys($data);
         $this->setValues();
-        $this->template = $View;
+        $this->template = $view;
         return str_replace($this->keys, $this->values, $this->template);
     }
 
@@ -83,13 +74,13 @@ class View
      * <b>Carregar PHP View:</b> Tendo um arquivo PHP com echo em variáveis extraídas, utilize esse método
      * para incluir, povoar e exibir o mesmo. Basta informar o caminho do arquivo<b>.inc.php</b> e um
      * envelope de dados dentro de um foreach!
-     * @param STRING $File = Caminho / Nome_do_arquivo
-     * @param ARRAY $Data = Array com dados obtidos
+     * @param STRING $file = Caminho / Nome_do_arquivo
+     * @param ARRAY $data = Array com dados obtidos
      */
-    public function request($File, array $Data)
+    public function includeFile($file, array $data = array())
     {
-        extract($Data);
-        require("{$File}.inc.php");
+        extract($data);
+        require("{$file}.inc.php");
     }
 
     /*
@@ -122,9 +113,9 @@ class View
     }
 
     //Exibe o template view com echo!
-    private function showView($View)
+    private function showView($view)
     {
-        $this->template = $View;
+        $this->template = $view;
         echo str_replace($this->keys, $this->values, $this->template);
     }
 
