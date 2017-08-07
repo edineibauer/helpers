@@ -12,7 +12,6 @@ namespace Helpers;
 
 class View
 {
-
     private $data;
     private $base;
     private $keys;
@@ -49,11 +48,11 @@ class View
      * @param array $data = Array com dados obtidos
      * @param View $view = Template carregado pelo método Load()
      */
-    public function show(array $data, $view)
+    public function show($view, array $data = array())
     {
         $this->setKeys($data);
         $this->setValues();
-        $this->showView($view);
+        $this->showView($this->load($view));
     }
 
     /**
@@ -62,11 +61,11 @@ class View
      * @param array $data = Array com dados obtidos
      * @param View $view = Template carregado pelo método Load()
      */
-    public function getShow(array $data, $view)
+    public function getShow($view, array $data = array())
     {
         $this->setKeys($data);
         $this->setValues();
-        $this->template = $view;
+        $this->template = $this->load($view);
         return str_replace($this->keys, $this->values, $this->template);
     }
 
@@ -111,12 +110,4 @@ class View
     {
         $this->values = array_values($this->data);
     }
-
-    //Exibe o template view com echo!
-    private function showView($view)
-    {
-        $this->template = $view;
-        echo str_replace($this->keys, $this->values, $this->template);
-    }
-
 }
