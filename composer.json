@@ -2,9 +2,7 @@
   "name": "conn/helpers",
   "description": "Classes de ajuda em geral para diversas tarefas secundárias",
   "type": "library",
-  "version": "1.0",
   "license": "MIT",
-  "minimum-stability": "dev",
   "authors": [
     {
       "name": "Edinei J. Bauer",
