@@ -2,7 +2,7 @@
   "name": "conn/helpers",
   "description": "Classes de ajuda em geral para diversas tarefas secundárias",
   "type": "library",
-  "version": "0.9.4",
+  "version": "0.9.5",
   "license": "MIT",
   "minimum-stability": "dev",
   "authors": [
