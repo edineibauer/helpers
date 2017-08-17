@@ -26,6 +26,15 @@ class Check
         return preg_match('/[a-z0-9_\.\-]+@[a-z0-9_\.\-]*[a-z0-9_\.\-]+\.[a-z]{2,4}$/', $email);
     }
 
+    public static function ajax()
+    {
+        if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
+            return false;
+        }
+
+        return true;
+    }
+
     public static function codificacao($term)
     {
         $term = Helper::replaceCharsetToUtf8($term);
