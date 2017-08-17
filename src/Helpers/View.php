@@ -60,7 +60,7 @@ class View
     {
         $this->setKeys($data);
         $this->setValues();
-        return str_replace($this->keys, $this->values, $this->load($view));
+        echo str_replace($this->keys, $this->values, $this->load($view));
     }
 
     /**
