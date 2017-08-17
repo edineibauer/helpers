@@ -17,10 +17,12 @@ class View
     private $keys;
     private $values;
     private $template;
+    private $lib;
 
     public function __construct()
     {
-        $this->base = (defined('HOME') ? HOME . DIRECTORY_SEPARATOR : "") . "vendor" . DIRECTORY_SEPARATOR;
+        $this->lib = "link-contol";
+        $this->base = (defined('PATH_HOME') ? PATH_HOME : (defined("HOME") ? HOME : "")) . "vendor/conn/" . $this->lib . "/template/";
     }
 
     /**
@@ -35,11 +37,19 @@ class View
     }
 
     /**
+     * @param string $lib
+     */
+    public function setLib($lib)
+    {
+        $this->lib = $lib;
+    }
+
+    /**
      * @param mixed $base
      */
     public function setBase($base)
     {
-        $this->base = HOME . DIRECTORY_SEPARATOR . $base;
+        $this->base = (defined('PATH_HOME') ? PATH_HOME : (defined("HOME") ? HOME : "")) . $base;
     }
 
     /**
