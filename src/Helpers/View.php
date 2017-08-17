@@ -113,6 +113,7 @@ class View
         $this->data['HOME'] = defined('HOME') ? HOME : "";
         $this->data['SITENAME'] = defined('SITENAME') ? SITENAME : "";
         $this->data['LOGO'] = defined('LOGO') ? LOGO : "";
+        $this->data['FAVICON'] = defined('FAVICON') ? FAVICON : "";
     }
 
     //Obtém os valores a serem inseridos nas chaves da view.
