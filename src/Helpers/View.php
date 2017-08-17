@@ -16,7 +16,6 @@ class View
     private $base;
     private $keys;
     private $values;
-    private $template;
     private $lib;
 
     public function __construct()
@@ -32,8 +31,7 @@ class View
      */
     public function load($template)
     {
-        $this->template = file_get_contents($this->base . (!preg_match('/\/$/i', $this->base) ? DIRECTORY_SEPARATOR : "") . (string)$template . '.html');
-        return $this->template;
+        return file_get_contents($this->base . (!preg_match('/\/$/i', $this->base) ? DIRECTORY_SEPARATOR : "") . (string)$template . '.html');
     }
 
     /**
@@ -62,7 +60,7 @@ class View
     {
         $this->setKeys($data);
         $this->setValues();
-        $this->showView($this->load($view));
+        return str_replace($this->keys, $this->values, $this->load($view));
     }
 
     /**
@@ -75,8 +73,7 @@ class View
     {
         $this->setKeys($data);
         $this->setValues();
-        $this->template = $this->load($view);
-        return str_replace($this->keys, $this->values, $this->template);
+        return str_replace($this->keys, $this->values, $this->load($view));
     }
 
     /**
