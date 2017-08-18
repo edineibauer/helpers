@@ -29,10 +29,10 @@ class Check
     public static function ajax()
     {
         if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-            return false;
+            return true;
         }
 
-        return true;
+        return false;
     }
 
     public static function codificacao($term)
