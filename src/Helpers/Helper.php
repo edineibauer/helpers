@@ -313,4 +313,11 @@ class Helper
             return false;
         endif;
     }
+
+
+    public static function createFolderIfNoExist($folder) {
+        if (!file_exists($folder) && !is_dir($folder)):
+            mkdir($folder, 0777);
+        endif;
+    }
 }
