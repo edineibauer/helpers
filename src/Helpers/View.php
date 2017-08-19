@@ -20,8 +20,7 @@ class View
 
     public function __construct()
     {
-        $this->lib = "link-control";
-        $this->base = (defined('PATH_HOME') ? PATH_HOME : (defined("HOME") ? HOME : "")) . "vendor/conn/" . $this->lib . "/template/";
+        $this->setLib("link-control");
     }
 
     /**
@@ -40,6 +39,7 @@ class View
     public function setLib($lib)
     {
         $this->lib = $lib;
+        $this->base = (defined('PATH_HOME') ? PATH_HOME : (defined("HOME") ? HOME : "")) . "vendor/conn/" . $this->lib . "/view/template/";
     }
 
     /**
