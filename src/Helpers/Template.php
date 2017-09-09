@@ -1,6 +1,6 @@
 <?php
 
-namespace FormCrud;
+namespace Helpers;
 
 class Template
 {
