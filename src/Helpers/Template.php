@@ -45,12 +45,12 @@ class Template
      * @param string $template
      * @param array $data
      */
-    public function show(string $template, array $data = null) : void
+    public function show(string $template, array $data = null)
     {
-        $this->prepareShow($template, $data, true);
+        echo $this->prepareShow($template, $data);
     }
 
-    private function prepareShow(string $template, array $data = null, bool $type = false) {
+    private function prepareShow(string $template, array $data = null) :string {
         if($this->library) {
             $this->start();
 
@@ -58,17 +58,14 @@ class Template
                 $this->setData($data);
             }
 
-            if($type) {
+            $retorno = $this->smart->fetch($template . ".tpl");
 
-                $this->smart->display($template . ".tpl");
-                $this->smart->clearAllAssign();
-            } else {
+            $this->smart->clearAllAssign();
 
-                $retorno = $this->smart->fetch($template . ".tpl");
-                $this->smart->clearAllAssign();
-                return $retorno;
-            }
+            return $retorno;
         }
+
+        return "";
     }
 
     /**
@@ -89,9 +86,19 @@ class Template
     private function start()
     {
         $this->smart = new \Smarty();
+        $this->preData();
         //        $this->smart->caching = true;
         //        $this->smart->cache_lifetime = 120;
 
         $this->smart->setTemplateDir("vendor/conn/{$this->library}/tpl" . ($this->design ? "_{$this->design}" : ""));
+    }
+
+    private function preData()
+    {
+        $this->smart->assign("home", HOME);
+        $this->smart->assign("path_home", PATH_HOME);
+        $this->smart->assign("logo", LOGO);
+        $this->smart->assign("favicon", FAVICON);
+        $this->smart->assign("sitename", SITENAME);
     }
 }
