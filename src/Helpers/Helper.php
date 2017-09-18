@@ -117,11 +117,14 @@ class Helper
      */
     public static function listFolder($dir)
     {
-        foreach (scandir($dir) as $b):
-            if ($b !== "." && $b !== ".."):
-                $directory[] = $b;
-            endif;
-        endforeach;
+        $directory = array();
+        if(file_exists($dir)) {
+            foreach (scandir($dir) as $b):
+                if ($b !== "." && $b !== ".."):
+                    $directory[] = $b;
+                endif;
+            endforeach;
+        }
 
         return $directory;
     }
