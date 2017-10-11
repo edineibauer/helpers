@@ -70,7 +70,6 @@ class Date
     {
         foreach (preg_split("/\W/i", $date) as $i => $dado) {
             $this->getDatePart($i, $dado);
-            var_dump($this->data);
         }
 
         $this->checkErro();
