@@ -22,9 +22,9 @@ class Date
      * Recebe um date em formato aleatório e retorna um date no padrão informado ou que esta por padrão
      * @param string $date
      * @param string $pattern
-     * @return string
+     * @return mixed
      */
-    public function getData(string $date, string $pattern = "Y-m-d"):?string
+    public function getData(string $date, string $pattern = "Y-m-d")
     {
         if (!$date) {
             $this->data = date($pattern);
@@ -32,7 +32,12 @@ class Date
             $this->prepareDate($date);
         }
 
-        return $this->erro ? null : str_replace(array('Y', 'm', 'd'), array($this->data['ano'], $this->data['mes'], $this->data['dia']), $pattern);
+        if($this->erro) {
+            return null;
+        } else {
+            $originalDate = $this->data['ano'] . '-' . $this->data['mes'] . '-' . $this->data['dia'];
+            return date($pattern, strtotime($originalDate));
+        }
     }
 
     /**
@@ -65,8 +70,10 @@ class Date
     {
         foreach (preg_split("/\W/i", $date) as $i => $dado) {
             $this->getDatePart($i, $dado);
+            var_dump($this->data);
         }
 
+        $this->checkErro();
         $this->checkMonthEdge();
     }
 
@@ -122,7 +129,7 @@ class Date
                 $this->position[$current] = $position;
             }
         } else {
-            $current = $this->setDateInfo('mes', 'dia');
+            $current = $this->setDateInfo('mes', 'dia', 'ano');
             if ($current) {
                 $this->data[$current] = $dado;
                 $this->position[$current] = $position;
@@ -138,7 +145,7 @@ class Date
      */
     private function setMes(int $mes, int $position)
     {
-        if (!$this->certeza['ano']) {
+        if (!$this->certeza['mes']) {
             if (isset($this->data['mes'])) {
                 $current = $this->setDateInfo('dia', 'ano');
                 if ($current) {
@@ -177,10 +184,10 @@ class Date
      * $param1 > $param2 > $param3
      * @param string $param1
      * @param string $param2
-     * @param string $param3
-     * @return string
+     * @param mixed $param3
+     * @return mixed
      */
-    private function setDateInfo(string $param1, string $param2, ?string $param3 = null) :?string
+    private function setDateInfo(string $param1, string $param2, $param3 = null)
     {
         if (!$this->certeza[$param1] && !isset($this->data[$param1])) {
             return $param1;
@@ -209,19 +216,35 @@ class Date
      * Ajusta posição do mês, caso este tenha sido encontrado na ponta da data passada,
      * verifica a possibilidade de trocar a informação do mês com uma das pontas (dia ou ano)
      * se for possível, ele troca a informação, mantendo o campo mês, no meio da data passada.
-    */
+     */
     private function checkMonthEdge()
     {
-        asort($this->position);
-        $this->position = array_keys($this->position);
+        if(!$this->erro) {
+            asort($this->position);
+            $this->position = array_keys($this->position);
 
-        if ((isset($this->position[0]) && $this->position[0] === "mes") || (isset($this->position[2]) && $this->position[2] === "mes")) {
-            $n = $this->position[1];
-            if (!$this->certeza['mes'] && !$this->certeza[$n] && $this->data[$n] < 13 && $this->data[$n] > 0) {
-                $temp = $this->data['mes'];
-                $this->data['mes'] = $this->data[$n];
-                $this->data[$n] = $temp;
+            if ((isset($this->position[0]) && $this->position[0] === "mes") || (isset($this->position[2]) && $this->position[2] === "mes")) {
+                $n = $this->position[1];
+                if (!$this->certeza['mes'] && !$this->certeza[$n] && $this->data[$n] < 13 && $this->data[$n] > 0) {
+                    $temp = $this->data['mes'];
+                    $this->data['mes'] = $this->data[$n];
+                    $this->data[$n] = $temp;
+                }
             }
+        }
+    }
+
+    private function checkErro()
+    {
+        if(!isset($this->data['dia']) || empty($this->data['dia'])){
+            $this->erro = "não foi possível encontrar o dia de uma data válida.";
+
+        } elseif(!isset($this->data['mes']) || empty($this->data['mes'])){
+            $this->erro = "não foi possível encontrar o mês de uma data válida.";
+
+        } elseif(!isset($this->data['ano']) || empty($this->data['ano'])) {
+            $this->erro = "não foi possível encontrar o ano de uma data válida.";
+
         }
     }
 }
