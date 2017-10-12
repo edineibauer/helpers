@@ -83,18 +83,21 @@ class Date
      */
     private function getDatePart(int $i, string $dado)
     {
-        if (!is_numeric($dado)) {
-            $dado = (string)$dado;
-            $this->checkNameMonth($dado, $i);
+        $dado = strip_tags(trim($dado));
+        if (!empty($dado)) {
+            if (!is_numeric($dado)) {
+                $dado = (string)$dado;
+                $this->checkNameMonth($dado, $i);
 
-        } else {
-            $dado = (int)$dado;
+            } else {
+                $dado = (int)$dado;
 
-            if ($dado > 31) {
-                $this->setAno($dado, $i);
+                if ($dado > 31) {
+                    $this->setAno($dado, $i);
 
-            } elseif ($dado > 0) {
-                $this->checkWhichPart($dado, $i);
+                } elseif ($dado > 0) {
+                    $this->checkWhichPart($dado, $i);
+                }
             }
         }
     }
