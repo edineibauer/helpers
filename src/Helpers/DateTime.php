@@ -136,7 +136,11 @@ class DateTime
         }
 
         if(preg_match("/\D(\d{1,4})[-\/,._;\\\](\d{1,2})[-\/,._;\\\](\d{1,4})\D/i", $dado, $dateTime)){
-            if($dateTime[1] > 31 && $dateTime[3] < 32 && $dateTime[3] > 0) {
+            $ano = date('y');
+            if(strlen($dateTime[3]) < 3 && (($dateTime[1] > 31 && $dateTime[3] < 32 && $dateTime[3] > 0) || (strlen($dateTime[3]) === 1 && strlen($dateTime[1]) > 1) ||
+                    (strlen($dateTime[3]) === 2 && strlen($dateTime[1]) === 2 &&
+                        ($dateTime[1] === $ano && $dateTime[3] !== $ano)
+                        || ($dateTime[1] > ($ano - 3) && $dateTime[1] < ($ano + 2) && ($dateTime[3] > ($ano + 1) || $dateTime[3] < ($ano - 2)))))) {
                 $this->setAno($dateTime[1], true);
                 $this->setMes($dateTime[2], true);
                 $this->setDia($dateTime[3], true);
