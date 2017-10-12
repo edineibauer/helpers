@@ -27,7 +27,7 @@ class Time
 
         } else {
             $strtoTime = "";
-            if ($this->data['h'] > 11) {
+            if (isset($this->data['h']) && $this->data['h'] > 11) {
                 $this->data['h'] -= 12;
                 $strtoTime = "+12hours";
             }
