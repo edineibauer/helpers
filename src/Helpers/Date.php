@@ -24,7 +24,7 @@ class Date
      * @param string $pattern
      * @return mixed
      */
-    public function getData(string $date, string $pattern = "Y-m-d")
+    public function getDate(string $date, string $pattern = "Y-m-d")
     {
         if (!$date) {
             $this->data = date($pattern);
@@ -46,20 +46,6 @@ class Date
     public function getErro(): string
     {
         return $this->erro;
-    }
-
-    /**
-     * Reduz as strings de uma lista em strings de até 3 caracteres
-     * @param array $date
-     * @return array
-     */
-    private function reduzDateFormat(array $date): array
-    {
-        $data = [];
-        foreach ($date as $item) {
-            $data[] = substr($item, 0, 3);
-        }
-        return $data;
     }
 
     /**
@@ -236,6 +222,23 @@ class Date
         }
     }
 
+    /**
+     * Reduz as strings de uma lista em strings de até 3 caracteres
+     * @param array $date
+     * @return array
+     */
+    private function reduzDateFormat(array $date): array
+    {
+        $data = [];
+        foreach ($date as $item) {
+            $data[] = substr($item, 0, 3);
+        }
+        return $data;
+    }
+
+    /**
+     * Verifica por erros
+    */
     private function checkErro()
     {
         if(!isset($this->data['dia']) || empty($this->data['dia'])){
