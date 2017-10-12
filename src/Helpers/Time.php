@@ -148,7 +148,7 @@ class Time
 
             $preg = "/\s*(\d{1,2})\s*(" . $pregTipo . ")\s*/i";
             preg_match($preg, $value, $matches);
-            if ($matches[1] < 24) {
+            if ($tipo !== 'h' || $matches[1] < 24) {
                 $this->data[$tipo] = (int)$matches[1];
                 $this->certeza[$tipo] = true;
             } else {
