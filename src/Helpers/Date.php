@@ -20,14 +20,16 @@ class Date
 
     /**
      * Recebe um date em formato aleatório e retorna um date no padrão informado ou que esta por padrão
-     * @param string $date
+     * @param mixed $date
      * @param string $pattern
      * @return mixed
      */
-    public function getDate(string $date, string $pattern = "Y-m-d")
+    public function getDate($date, string $pattern = "Y-m-d")
     {
         if (!$date) {
-            $this->data = date($pattern);
+            $this->data['ano'] = date("Y");
+            $this->data['mes'] = date("m");
+            $this->data['dia'] = date("d");
         } else {
             $this->prepareDate($date);
         }

@@ -32,6 +32,36 @@ class Helper
         endif;
     }
 
+    public static function getArrayData($array, $value)
+    {
+        $dado = array();
+        if (is_array($array)) {
+            if (count($array) === 9) {
+                $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]][$array[5]][$array[6]][$array[7]][$array[8]] = $value;
+            } elseif (count($array) === 8) {
+                $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]][$array[5]][$array[6]][$array[7]] = $value;
+            } elseif (count($array) === 7) {
+                $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]][$array[5]][$array[6]] = $value;
+            } elseif (count($array) === 6) {
+                $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]][$array[5]] = $value;
+            } elseif (count($array) === 5) {
+                $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]] = $value;
+            } elseif (count($array) === 4) {
+                $dado[$array[0]][$array[1]][$array[2]][$array[3]] = $value;
+            } elseif (count($array) === 3) {
+                $dado[$array[0]][$array[1]][$array[2]] = $value;
+            } elseif (count($array) === 2) {
+                $dado[$array[0]][$array[1]] = $value;
+            } elseif (count($array) === 1) {
+                $dado[$array[0]] = $value;
+            }
+        } else {
+            $dado[$array] = $value;
+        }
+
+        return $dado;
+    }
+
     /**
      * <b>replaceString:</b> troca uma expressão regular por um valor
      * @param STRING $from = expressão a ser correspondida
@@ -52,7 +82,8 @@ class Helper
      * @param $domain STRING = dominio de origem da url
      * @return $url STRING
      */
-    public static function replaceUrlAbstractToFullUrl($url, $domain = null) {
+    public static function replaceUrlAbstractToFullUrl($url, $domain = null)
+    {
 
         if ($domain):
             $domain = (preg_match('/\/$/i', $domain) ? substr($domain, 0, -1) : $domain);
@@ -115,13 +146,15 @@ class Helper
      * @param STRING $dir = nome do diretório a ser varrido
      * @return array $directory = lista com cada arquivo e pasta no diretório
      */
-    public static function listFolder($dir)
+    public static function listFolder($dir, $limit = 5000)
     {
         $directory = array();
-        if(file_exists($dir)) {
+        if (file_exists($dir)) {
+            $i = 0;
             foreach (scandir($dir) as $b):
-                if ($b !== "." && $b !== ".."):
+                if ($b !== "." && $b !== ".." && $i < $limit):
                     $directory[] = $b;
+                    $i++;
                 endif;
             endforeach;
         }
@@ -209,12 +242,12 @@ class Helper
      * @param $url
      * @param $data
      * @return STRING
-    */
+     */
     public static function postRequest($url, $data)
     {
         $url = str_replace("&amp;", "&", urldecode(trim($url)));
 
-        if(Helper::isOnline($url)) {
+        if (Helper::isOnline($url)) {
             $options = array('http' => array('header' => "Content-type: application/x-www-form-urlencoded\r\n", 'method' => 'POST', 'content' => http_build_query($data)));
             $context = stream_context_create($options);
 
@@ -317,7 +350,8 @@ class Helper
         endif;
     }
 
-    public static function createFolderIfNoExist($folder) {
+    public static function createFolderIfNoExist($folder)
+    {
         if (!file_exists($folder) && !is_dir($folder)):
             mkdir($folder, 0777);
         endif;
