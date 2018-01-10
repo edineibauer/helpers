@@ -96,6 +96,8 @@ class Template
     {
         $this->smart->assign("datetime", date("Y-m-d H:i:s"));
         $this->smart->assign("date", date("Y-m-d"));
+        $this->smart->assign("year", date("Y"));
+        $this->smart->assign("hora", date("H:i"));
         if(defined('HOME')) $this->smart->assign("home", HOME);
         if(defined('PATH_HOME')) $this->smart->assign("path_home", PATH_HOME);
         if(defined('LOGO')) $this->smart->assign("logo", LOGO);
