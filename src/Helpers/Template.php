@@ -94,8 +94,8 @@ class Template
 
     private function preData()
     {
-        $this->smart->assign("datetime", date("Y-m-d H:i:s"));
-        $this->smart->assign("date", date("Y-m-d"));
+        $this->smart->assign("datetime", date("d/m/Y H:i:s"));
+        $this->smart->assign("date", date("d/m/Y"));
         $this->smart->assign("year", date("Y"));
         $this->smart->assign("hora", date("H:i"));
         if(defined('HOME')) $this->smart->assign("home", HOME);
