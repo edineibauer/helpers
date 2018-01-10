@@ -94,6 +94,8 @@ class Template
 
     private function preData()
     {
+        $this->smart->assign("datetime", date("Y-m-d H:i:s"));
+        $this->smart->assign("date", date("Y-m-d"));
         if(defined('HOME')) $this->smart->assign("home", HOME);
         if(defined('PATH_HOME')) $this->smart->assign("path_home", PATH_HOME);
         if(defined('LOGO')) $this->smart->assign("logo", LOGO);
