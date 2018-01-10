@@ -5,7 +5,7 @@ namespace Helpers;
 class Template
 {
     private $library;
-    private $design;
+    private $folder;
     private $smart;
 
     public function __construct($library = null)
@@ -24,11 +24,11 @@ class Template
     }
 
     /**
-     * @param mixed $design
+     * @param mixed $folder
      */
-    public function setDesign($design)
+    public function setFolder($folder)
     {
-        $this->design = $design;
+        $this->folder = $folder;
     }
 
     /**
@@ -54,9 +54,8 @@ class Template
         if($this->library) {
             $this->start();
 
-            if ($data) {
+            if ($data)
                 $this->setData($data);
-            }
 
             $retorno = $this->smart->fetch($template . ".tpl");
 
@@ -90,15 +89,15 @@ class Template
         //        $this->smart->caching = true;
         //        $this->smart->cache_lifetime = 120;
 
-        $this->smart->setTemplateDir("vendor/conn/{$this->library}/tpl" . ($this->design ? "_{$this->design}" : ""));
+        $this->smart->setTemplateDir("vendor/conn/{$this->library}/tpl" . ($this->folder ? "/{$this->folder}" : ""));
     }
 
     private function preData()
     {
-        $this->smart->assign("home", HOME);
-        $this->smart->assign("path_home", PATH_HOME);
-        $this->smart->assign("logo", LOGO);
-        $this->smart->assign("favicon", FAVICON);
-        $this->smart->assign("sitename", SITENAME);
+        if(defined('HOME')) $this->smart->assign("home", HOME);
+        if(defined('PATH_HOME')) $this->smart->assign("path_home", PATH_HOME);
+        if(defined('LOGO')) $this->smart->assign("logo", LOGO);
+        if(defined('FAVICON')) $this->smart->assign("favicon", FAVICON);
+        if(defined('SITENAME')) $this->smart->assign("sitename", SITENAME);
     }
 }

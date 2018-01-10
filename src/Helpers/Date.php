@@ -56,6 +56,8 @@ class Date
      */
     private function prepareDate(string $date)
     {
+        if(preg_match("/\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2}/i", $date)) $date = explode(" ", $date)[0];
+
         foreach (preg_split("/\W/i", $date) as $i => $dado) {
             $this->getDatePart($i, $dado);
         }
