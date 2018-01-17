@@ -32,29 +32,56 @@ class Helper
         endif;
     }
 
+    /**
+     * Converte os valores no tipo string de um array nos tipos corretos dos valores
+     * ex: convert "true" => true; "12" => 12
+     *
+     * @param array $array
+     * @return array
+     */
+    public static function convertStringToValueArray(array $array): array
+    {
+        function convertStringToValues($st)
+        {
+            if ($st === "TRUE" || $st === "true" || $st === "false" || $st === "FALSE")
+                return $st === "TRUE" || $st === "true";
+            elseif (is_numeric($st) && preg_match('/\./i', $st))
+                return (float)$st;
+            elseif (is_numeric($st))
+                return (int)$st;
+
+            return $st;
+        }
+
+        foreach ($array as $i => $attr)
+            $array[$i] = (is_array($attr) ? self::convertStringToValueArray($attr) : convertStringToValues($attr));
+
+        return $array;
+    }
+
     public static function getArrayData($array, $value)
     {
         $dado = array();
         if (is_array($array)) {
-            if (count($array) === 9) {
+            if (count($array) === 9)
                 $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]][$array[5]][$array[6]][$array[7]][$array[8]] = $value;
-            } elseif (count($array) === 8) {
+            elseif (count($array) === 8)
                 $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]][$array[5]][$array[6]][$array[7]] = $value;
-            } elseif (count($array) === 7) {
+            elseif (count($array) === 7)
                 $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]][$array[5]][$array[6]] = $value;
-            } elseif (count($array) === 6) {
+            elseif (count($array) === 6)
                 $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]][$array[5]] = $value;
-            } elseif (count($array) === 5) {
+            elseif (count($array) === 5)
                 $dado[$array[0]][$array[1]][$array[2]][$array[3]][$array[4]] = $value;
-            } elseif (count($array) === 4) {
+            elseif (count($array) === 4)
                 $dado[$array[0]][$array[1]][$array[2]][$array[3]] = $value;
-            } elseif (count($array) === 3) {
+            elseif (count($array) === 3)
                 $dado[$array[0]][$array[1]][$array[2]] = $value;
-            } elseif (count($array) === 2) {
+            elseif (count($array) === 2)
                 $dado[$array[0]][$array[1]] = $value;
-            } elseif (count($array) === 1) {
+            elseif (count($array) === 1)
                 $dado[$array[0]] = $value;
-            }
+
         } else {
             $dado[$array] = $value;
         }
