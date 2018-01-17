@@ -41,22 +41,30 @@ class Helper
      */
     public static function convertStringToValueArray(array $array): array
     {
-        function convertStringToValues($st)
-        {
-            if ($st === "TRUE" || $st === "true" || $st === "false" || $st === "FALSE")
-                return $st === "TRUE" || $st === "true";
-            elseif (is_numeric($st) && preg_match('/\./i', $st))
-                return (float)$st;
-            elseif (is_numeric($st))
-                return (int)$st;
-
-            return $st;
-        }
 
         foreach ($array as $i => $attr)
-            $array[$i] = (is_array($attr) ? self::convertStringToValueArray($attr) : convertStringToValues($attr));
+            $array[$i] = (is_array($attr) ? self::convertStringToValueArray($attr) :  self::convertStringToValues($attr));
 
         return $array;
+    }
+
+    /**
+     * Converte os valores no tipo string para os tipos corretos dos valores
+     * ex: convert "true" => true; "12" => 12
+     *
+     * @param mixed $array
+     * @return mixed
+     */
+    public static function convertStringToValues($st)
+    {
+        if ($st === "TRUE" || $st === "true" || $st === "false" || $st === "FALSE")
+            return $st === "TRUE" || $st === "true";
+        elseif (is_numeric($st) && preg_match('/\./i', $st))
+            return (float)$st;
+        elseif (is_numeric($st))
+            return (int)$st;
+
+        return $st;
     }
 
     public static function getArrayData($array, $value)
