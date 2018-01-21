@@ -93,18 +93,17 @@ class Check
      *
      * @param string $cnpj
      * @return bool
-    */
-    public static function cnpj(string $cnpj) :bool
+     */
+    public static function cnpj(string $cnpj): bool
     {
-        $cnpj = preg_replace('/[^0-9]/', '', (string) $cnpj);
+        $cnpj = preg_replace('/[^0-9]/', '', (string)$cnpj);
 
         // Valida tamanho
         if (strlen($cnpj) != 14)
             return false;
 
         // Valida primeiro dígito verificador
-        for ($i = 0, $j = 5, $soma = 0; $i < 12; $i++)
-        {
+        for ($i = 0, $j = 5, $soma = 0; $i < 12; $i++) {
             $soma += $cnpj{$i} * $j;
             $j = ($j == 2) ? 9 : $j - 1;
         }
@@ -113,8 +112,7 @@ class Check
             return false;
 
         // Valida segundo dígito verificador
-        for ($i = 0, $j = 6, $soma = 0; $i < 13; $i++)
-        {
+        for ($i = 0, $j = 6, $soma = 0; $i < 13; $i++) {
             $soma += $cnpj{$i} * $j;
             $j = ($j == 2) ? 9 : $j - 1;
         }
@@ -128,7 +126,7 @@ class Check
      * @param string $cpf
      * @return bool
      */
-    public static function cpf(string $cpf) :bool
+    public static function cpf(string $cpf): bool
     {
         $cpf = preg_replace('/[^0-9]/', '', (string)$cpf);
         if (strlen($cpf) !== 11 || $cpf === '00000000000' || $cpf === '11111111111' || $cpf === '22222222222' || $cpf === '33333333333' || $cpf === '44444444444' || $cpf === '55555555555' || $cpf === '66666666666' || $cpf === '77777777777' || $cpf === '88888888888' || $cpf === '99999999999'):
@@ -151,6 +149,19 @@ class Check
         $resto = $soma % 11;
         return $cpf{10} == ($resto < 2 ? 0 : 11 - $resto);
 
+    }
+
+    /**
+     * Retorna verdadeiro se o array for associativo do tipo ["nome" => "Edinei"]
+     *
+     * @param array $arr
+     * @return bool
+    */
+    public static function isAssoc(array $arr) : bool
+    {
+        if (array() === $arr)
+            return false;
+        return array_keys($arr) !== range(0, count($arr) - 1);
     }
 
     /**
@@ -204,7 +215,8 @@ class Check
         return true;
     }
 
-    public static function json($string) {
+    public static function json($string)
+    {
         json_decode($string);
         return (json_last_error() == JSON_ERROR_NONE);
     }
