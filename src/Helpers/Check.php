@@ -156,8 +156,8 @@ class Check
      *
      * @param array $arr
      * @return bool
-    */
-    public static function isAssoc(array $arr) : bool
+     */
+    public static function isAssoc(array $arr): bool
     {
         if (array() === $arr)
             return false;
@@ -213,6 +213,15 @@ class Check
         }
 
         return true;
+    }
+
+    /**
+     * @param string $senha
+     * @return string
+    */
+    public static function password(string $senha) :string
+    {
+        return md5(str_replace(['1', 'c', 's', '2', 'r', 'o', 'n', 'l', 'f', 'x', '0', 'k', 'v', '5', 'y'], ['b', '4', '9', '6', 'w', 'a', 'd', '3', 'z', '7', 'j', 'm', '8', 'h', 't'], md5("t" . trim($senha) . "0!")));
     }
 
     public static function json($string)
