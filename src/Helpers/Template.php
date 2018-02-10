@@ -89,7 +89,7 @@ class Template
         //        $this->smart->caching = true;
         //        $this->smart->cache_lifetime = 120;
 
-        $this->smart->setTemplateDir($this->folder ?? "vendor/conn/{$this->library}/tpl");
+        $this->smart->setTemplateDir($this->folder ?? (DEV && $this->library === DOMINIO ? "tpl" : "vendor/conn/{$this->library}/tpl"));
     }
 
     private function preData()
