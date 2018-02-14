@@ -33,6 +33,10 @@ class Endereco
     private static function baseApi(string $param, string $ceps = "ceps")
     {
         if(defined('CEPABERTO') && !empty(CEPABERTO)) {
+            if(isset($_COOKIE['cepaberto']))
+                sleep(3);
+
+            setcookie("cepaberto", 1, time() + 3, "/");
             $token = CEPABERTO;
             $url = 'http://www.cepaberto.com/api/v2/' . $ceps . '.json?' . $param;
             $ch = curl_init();
