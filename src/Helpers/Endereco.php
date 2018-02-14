@@ -32,12 +32,15 @@ class Endereco
 
     private static function baseApi(string $param, string $ceps = "ceps")
     {
-        $token = CEPABERTO;
-        $url = 'http://www.cepaberto.com/api/v2/' . $ceps . '.json?' . $param;
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $url);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Token token="' . $token . '"'));
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        return json_decode(curl_exec($ch),true);
+        if(defined('CEPABERTO') && !empty(CEPABERTO)) {
+            $token = CEPABERTO;
+            $url = 'http://www.cepaberto.com/api/v2/' . $ceps . '.json?' . $param;
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Token token="' . $token . '"'));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            return json_decode(curl_exec($ch), true);
+        }
+        return null;
     }
 }
