@@ -224,6 +224,15 @@ class Check
         return md5(str_replace(['1', 'c', 's', '2', 'r', 'o', 'n', 'l', 'f', 'x', '0', 'k', 'v', '5', 'y'], ['b', '4', '9', '6', 'w', 'a', 'd', '3', 'z', '7', 'j', 'm', '8', 'h', 't'], md5("t" . trim($senha) . "0!")));
     }
 
+    /**
+     * @param string $image
+     * @return string
+     */
+    public static function getImage(string $image) :string
+    {
+        return HOME . str_replace('\\', '/', json_decode($image, true)[0]['url']);
+    }
+
     public static function json($string)
     {
         json_decode($string);
