@@ -101,8 +101,8 @@ class Template
         $this->smart->assign("dev", defined("DEV") ? DEV : false);
         if(defined('HOME')) $this->smart->assign("home", HOME);
         if(defined('PATH_HOME')) $this->smart->assign("path_home", PATH_HOME);
-        if(defined('LOGO')) $this->smart->assign("logo", LOGO);
-        if(defined('FAVICON')) $this->smart->assign("favicon", FAVICON);
+        if(defined('LOGO')) $this->smart->assign("logo", HOME . LOGO);
+        if(defined('FAVICON')) $this->smart->assign("favicon", HOME . FAVICON);
         if(defined('SITENAME')) $this->smart->assign("sitename", SITENAME);
     }
 }
