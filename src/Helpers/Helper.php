@@ -37,7 +37,7 @@ class Helper
      * @param string $colour
      * @return mixed
      */
-    function hex2rgb( string $colour ) {
+    public static function hex2rgb( string $colour ) {
         if ( $colour[0] == '#' )
             $colour = substr( $colour, 1 );
 
