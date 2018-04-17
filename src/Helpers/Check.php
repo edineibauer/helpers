@@ -35,6 +35,16 @@ class Check
         return false;
     }
 
+    public static function isJson($string)
+    {
+        if(is_string($string)) {
+            json_decode($string);
+            return (json_last_error() == JSON_ERROR_NONE);
+        } else {
+            return false;
+        }
+    }
+
     public static function codificacao($term)
     {
         $term = Helper::replaceCharsetToUtf8($term);
