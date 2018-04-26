@@ -3,6 +3,8 @@
   "description": "Classes de ajuda em geral para diversas tarefas secundárias",
   "type": "library",
   "license": "MIT",
+  "prefer-stable" : true,
+  "minimum-stability": "dev",
   "authors": [
     {
       "name": "Edinei J. Bauer",
