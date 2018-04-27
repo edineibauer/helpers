@@ -33,6 +33,25 @@ class Helper
     }
 
     /**
+     * Convert imagem recebida em formato json ou array armazenada pelo sistema da ontab
+     * array ou json format [["url" => "link", "size" => 335]]
+     *
+     * @param mixed $json
+     * @return string
+     */
+    public static function convertImageJson($json): string
+    {
+        if(empty($json))
+            return "";
+        elseif(is_array($json) && !empty($json[0]['url']))
+            return HOME . str_replace('\\', '/', $json[0]['url']);
+        elseif(Check::isJson($json) && preg_match('/url/i', $datum))
+            return HOME . str_replace('\\', '/', json_decode($json, true)[0]['url']);
+
+        return "";
+    }
+
+    /**
      * Converte cor hexadecimal para RGB ->retorna array('red' => 255, 'green' => 112, 'blue' => 114)
      * @param string $colour
      * @return mixed
