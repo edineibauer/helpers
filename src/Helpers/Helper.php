@@ -45,7 +45,7 @@ class Helper
             return "";
         elseif(is_array($json) && !empty($json[0]['url']))
             return HOME . str_replace('\\', '/', $json[0]['url']);
-        elseif(Check::isJson($json) && preg_match('/url/i', $datum))
+        elseif(Check::isJson($json) && preg_match('/url/i', $json))
             return HOME . str_replace('\\', '/', json_decode($json, true)[0]['url']);
 
         return "";
