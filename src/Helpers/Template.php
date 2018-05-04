@@ -104,5 +104,6 @@ class Template
         if(defined('LOGO')) $this->smart->assign("logo", HOME . LOGO);
         if(defined('FAVICON')) $this->smart->assign("favicon", HOME . FAVICON);
         if(defined('SITENAME')) $this->smart->assign("sitename", SITENAME);
+        if(defined('VERSION')) $this->smart->assign("version", VERSION);
     }
 }
