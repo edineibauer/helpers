@@ -105,5 +105,16 @@ class Template
         if(defined('FAVICON')) $this->smart->assign("favicon", HOME . FAVICON);
         if(defined('SITENAME')) $this->smart->assign("sitename", SITENAME);
         if(defined('VERSION')) $this->smart->assign("version", VERSION);
+
+        if(file_exists(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.css")) {
+            $f = file_get_contents(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.css");
+            $theme = explode(".theme {", $f)[1];
+            $themeb = explode(" ", explode("background-color:", $theme)[1])[0];
+            $themec = explode(" ", explode("color:", $theme)[1])[0];
+            if(!empty($themeb))
+                $this->smart->assign("theme", $themeb);
+            if(!empty($themec))
+                $this->smart->assign("themeColor", $themec);
+        }
     }
 }
