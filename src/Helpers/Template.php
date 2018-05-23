@@ -35,7 +35,7 @@ class Template
      * @param string $template
      * @param array $data
      * @return string
-    */
+     */
     public function getShow(string $template, array $data = null) :string
     {
         return $this->prepareShow($template, $data);
@@ -69,7 +69,7 @@ class Template
 
     /**
      * @param array $data
-    */
+     */
     public function setData(array $data)
     {
         foreach ($data as $name => $value) {
@@ -98,7 +98,7 @@ class Template
         $this->smart->assign("date", date("d/m/Y"));
         $this->smart->assign("year", date("Y"));
         $this->smart->assign("hora", date("H:i"));
-        $this->smart->assign("dev", defined("DEV") ? DEV : false);
+        $this->smart->assign("dev", defined("DEV") && DEV);
         if(defined('HOME')) $this->smart->assign("home", HOME);
         if(defined('PATH_HOME')) $this->smart->assign("path_home", PATH_HOME);
         if(defined('LOGO')) $this->smart->assign("logo", HOME . LOGO);
