@@ -109,8 +109,8 @@ class Template
         if(defined('VERSION')) $this->smart->assign("version", VERSION);
         if(defined('DOMINIO')) $this->smart->assign("dominio", DOMINIO);
 
-        if(file_exists(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.css")) {
-            $f = file_get_contents(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.css");
+        if(file_exists(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.min.css")) {
+            $f = file_get_contents(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.min.css");
             $theme = explode(".theme {", $f)[1];
             $themeb = explode(" ", explode("background-color:", $theme)[1])[0];
             $themec = explode(" ", explode("color:", $theme)[1])[0];
