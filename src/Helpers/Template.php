@@ -107,6 +107,7 @@ class Template
         if(defined('SITESUB')) $this->smart->assign("sitesub", SITESUB);
         if(defined('SITEDESC')) $this->smart->assign("sitedesc", SITEDESC);
         if(defined('VERSION')) $this->smart->assign("version", VERSION);
+        if(defined('DOMINIO')) $this->smart->assign("dominio", DOMINIO);
 
         if(file_exists(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.css")) {
             $f = file_get_contents(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.css");
