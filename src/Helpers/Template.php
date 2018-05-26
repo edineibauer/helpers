@@ -111,9 +111,9 @@ class Template
 
         if(file_exists(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.min.css")) {
             $f = file_get_contents(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.min.css");
-            $theme = explode(".theme {", $f)[1];
-            $themeb = explode(" ", explode("background-color:", $theme)[1])[0];
-            $themec = explode(" ", explode("color:", $theme)[1])[0];
+            $theme = explode(".theme{", $f)[1];
+            $themeb = explode("!important", explode("background-color:", $theme)[1])[0];
+            $themec = explode("!important", explode("color:", $theme)[1])[0];
             if(!empty($themeb))
                 $this->smart->assign("theme", $themeb);
             if(!empty($themec))
