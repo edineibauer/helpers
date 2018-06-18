@@ -45,6 +45,68 @@ class Check
         }
     }
 
+    public static function getEntityNotAllow() {
+        return self::getNotAllow('entity_not_show', 'allow');
+    }
+
+    public static function getMenuNotAllow() {
+        return self::getNotAllow('menu_not_show', 'menu');
+    }
+
+    /**
+     * @param string $dir
+     * @param string $option
+     * @return array|mixed
+     */
+    private static function getNotAllow(string $dir, string $option)
+    {
+        $file = [];
+        if (file_exists(PATH_HOME . "_config/{$dir}.json"))
+            $file = json_decode(file_get_contents(PATH_HOME . "_config/{$dir}.json"), true);
+
+        if (DEV && file_exists(PATH_HOME . "entity/{$option}"))
+            $file = self::addNotShow(PATH_HOME, $option, $file);
+
+        foreach (\Helpers\Helper::listFolder(PATH_HOME . "vendor/conn") as $lib) {
+            if (file_exists(PATH_HOME . "vendor/conn/{$lib}/entity/{$option}"))
+                $file = self::addNotShow(PATH_HOME . "vendor/conn/{$lib}/", $option, $file);
+        }
+
+        return $file;
+    }
+
+    /**
+     * @param string $menuDir
+     * @param string $dir
+     * @param array $file
+     * @return array
+     */
+    private static function addNotShow(string $menuDir, string $dir, array $file): array
+    {
+        foreach (\Helpers\Helper::listFolder($menuDir . "entity/{$dir}") as $item) {
+            $m = json_decode(file_get_contents($menuDir . "entity/{$dir}/{$item}"), true);
+            foreach ($m as $setor => $info) {
+                foreach ($info as $entity) {
+                    if (file_exists($menuDir . "entity/cache/{$entity}.json")) {
+                        if ($setor === "*") {
+                            foreach (array_keys($file) as $setor2) {
+                                //Adiciona entidade ao setor
+                                if (!in_array($entity, $file[$setor2]))
+                                    $file[$setor2][] = $entity;
+                            }
+                        } else {
+                            //Adiciona entidade ao setor
+                            if (!in_array($entity, $file[$setor]))
+                                $file[$setor][] = $entity;
+                        }
+                    }
+                }
+            }
+        }
+
+        return $file;
+    }
+
     public static function codificacao($term)
     {
         $term = Helper::replaceCharsetToUtf8($term);
@@ -228,7 +290,7 @@ class Check
     /**
      * @param string $senha
      * @return string
-    */
+     */
     public static function password(string $senha) :string
     {
         return md5(str_replace(['1', 'c', 's', '2', 'r', 'o', 'n', 'l', 'f', 'x', '0', 'k', 'v', '5', 'y'], ['b', '4', '9', '6', 'w', 'a', 'd', '3', 'z', '7', 'j', 'm', '8', 'h', 't'], md5("t" . trim($senha) . "0!")));
