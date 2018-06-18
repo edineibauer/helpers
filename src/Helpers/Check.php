@@ -89,10 +89,10 @@ class Check
                 foreach ($info as $entity) {
                     if (file_exists($menuDir . "entity/cache/{$entity}.json")) {
                         if ($setor === "*") {
-                            foreach (array_keys($file) as $setor2) {
+                            for($e=0;$e<20;$e++) {
                                 //Adiciona entidade ao setor
-                                if (!in_array($entity, $file[$setor2]))
-                                    $file[$setor2][] = $entity;
+                                if (!isset($file[$e]) || !in_array($entity, $file[$e]))
+                                    $file[$e][] = $entity;
                             }
                         } else {
                             //Adiciona entidade ao setor
