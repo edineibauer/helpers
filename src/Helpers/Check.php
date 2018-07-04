@@ -50,7 +50,7 @@ class Check
     }
 
     public static function getMenuNotAllow() {
-        return self::getNotAllow('menu_not_show', 'menu');
+        return self::getNotAllow('menu_not_show', 'notMenu');
     }
 
     /**
