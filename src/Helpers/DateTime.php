@@ -32,14 +32,13 @@ class DateTime
 
     private function setMes($mes, $certeza = false) {
         if(!$this->certeza['mes'] && !empty($mes)) {
-            if (is_string($mes)) {
+            if (is_string($mes))
                 $mes = $this->getMonthNumber($mes);
-            }
+
             if (is_numeric($mes) && $mes > 0 && $mes < 13) {
                 $this->data['mes'] = (int)$mes;
-                if($certeza) {
+                if($certeza)
                     $this->certeza['mes'] = true;
-                }
             }
         }
     }
@@ -88,11 +87,12 @@ class DateTime
      */
     public function getDateTime(string $date, string $pattern = "Y-m-d H:i:s")
     {
-        if (!$date) {
+        if (!$date)
             $this->data = date($pattern);
-        } else {
+        else
             $this->prepareDateTime($date);
-        }
+
+        var_dump($this->data);
 
         if($this->erro || !isset($this->data['ano']) || !isset($this->data['mes']) || !isset($this->data['dia'])) {
             return null;
@@ -126,26 +126,32 @@ class DateTime
 
         if(preg_match("/\D(\d{1,2})*\W*(jan|fev|feb|mar|abr|apr|mai|may|jun|jul|ago|aug|set|sep|out|oct|nov|dez|dec)(eiro|uary|ereiro|bruary|ço|ch|ho|e|y|sto|ust|embro|termber|ubro|ober|ember)*\D/i", $dado, $diaMes)){
             $this->setMes($diaMes[2], true);
-            if(!empty($diaMes[1])) {
+            if(!empty($diaMes[1]))
                 $this->setDia($diaMes[1]);
-            }
         }
 
-        if(preg_match("/\D((20|19)\d{2})\D/i", $dado, $ano)){
+        if(preg_match("/\D((20|19)\d{2})\D/i", $dado, $ano))
             $this->setAno($ano[1], true);
-        }
+
+        if(preg_match('/ (\d{1,2}),/i', $dado, $dia))
+            $this->setDia($dia[1], true);
 
         if(preg_match("/\D(\d{1,4})[-\/,._;\\\](\d{1,2})[-\/,._;\\\](\d{1,4})\D/i", $dado, $dateTime)){
+
             if(!(strlen($dateTime[3]) > 2 && strlen($dateTime[1]) > 2)) {
                 $ano = date('y');
+                var_dump('entrou aqui');
                 if (strlen($dateTime[3]) < 3 && (($dateTime[1] > 31 && $dateTime[3] < 32 && $dateTime[3] > 0) || (strlen($dateTime[3]) === 1 && strlen($dateTime[1]) > 1) ||
                         (strlen($dateTime[3]) === 2 && strlen($dateTime[1]) === 2 &&
                             ($dateTime[1] === $ano && $dateTime[3] !== $ano)
                             || ($dateTime[1] > ($ano - 3) && $dateTime[1] < ($ano + 2) && ($dateTime[3] > ($ano + 1) || $dateTime[3] < ($ano - 2)))))) {
+
+                    var_dump('1');
                     $this->setAno($dateTime[1], true);
                     $this->setMes($dateTime[2], true);
                     $this->setDia($dateTime[3], true);
                 } else {
+                    var_dump('2');
                     $this->setAno($dateTime[3], $dateTime[3] > 31 && $dateTime[1] < 32);
                     $this->setMes($dateTime[2], true);
                     $this->setDia($dateTime[1], $dateTime[3] > 31 && $dateTime[1] < 32);
@@ -236,15 +242,16 @@ class DateTime
      */
     private function getMonthNumber($month) :int
     {
-        if(is_numeric($month)) {
+        $month = strtolower($month);
+        if(is_numeric($month))
             return $month;
-        }
 
         foreach ($this->meses as $mes) {
-            if (in_array($month, $mes)) {
+            if (in_array($month, $mes))
                 return (array_search($month, $mes) + 1);
-            }
         }
+
+        return date("m");
     }
 
     /**
