@@ -92,8 +92,6 @@ class DateTime
         else
             $this->prepareDateTime($date);
 
-        var_dump($this->data);
-
         if($this->erro || !isset($this->data['ano']) || !isset($this->data['mes']) || !isset($this->data['dia'])) {
             return null;
         } else {
