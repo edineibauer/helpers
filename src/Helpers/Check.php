@@ -37,7 +37,7 @@ class Check
 
     public static function isJson($string)
     {
-        if(is_string($string)) {
+        if (is_string($string)) {
             json_decode($string);
             return (json_last_error() == JSON_ERROR_NONE);
         } else {
@@ -45,11 +45,13 @@ class Check
         }
     }
 
-    public static function getEntityNotAllow() {
+    public static function getEntityNotAllow()
+    {
         return self::getNotAllow('entity_not_show', 'allow');
     }
 
-    public static function getMenuNotAllow() {
+    public static function getMenuNotAllow()
+    {
         return self::getNotAllow('menu_not_show', 'notMenu');
     }
 
@@ -89,7 +91,7 @@ class Check
                 foreach ($info as $entity) {
                     if (file_exists($menuDir . "entity/cache/{$entity}.json")) {
                         if ($setor === "*") {
-                            for($e=0;$e<20;$e++) {
+                            for ($e = 0; $e < 20; $e++) {
                                 //Adiciona entidade ao setor
                                 if (!isset($file[$e]) || !in_array($entity, $file[$e]))
                                     $file[$e][] = $entity;
@@ -138,6 +140,27 @@ class Check
         endwhile;
 
         return ($i === 8 ? false : strip_tags($term));
+    }
+
+    /**
+     * @param string $val
+     * @param string $mask
+     * @return string
+     */
+    public static function mask(string $val, string $mask)
+    {
+        $maskared = '';
+        $k = 0;
+        for ($i = 0; $i <= strlen($mask) - 1; $i++) {
+            if ($mask[$i] == '#') {
+                if (isset($val[$k]))
+                    $maskared .= $val[$k++];
+            } else {
+                if (isset($mask[$i]))
+                    $maskared .= $mask[$i];
+            }
+        }
+        return $maskared;
     }
 
 
@@ -291,7 +314,7 @@ class Check
      * @param string $senha
      * @return string
      */
-    public static function password(string $senha) :string
+    public static function password(string $senha): string
     {
         return md5(str_replace(['1', 'c', 's', '2', 'r', 'o', 'n', 'l', 'f', 'x', '0', 'k', 'v', '5', 'y'], ['b', '4', '9', '6', 'w', 'a', 'd', '3', 'z', '7', 'j', 'm', '8', 'h', 't'], md5("t" . trim($senha) . "0!")));
     }
@@ -300,7 +323,7 @@ class Check
      * @param string $image
      * @return string
      */
-    public static function getImage(string $image) :string
+    public static function getImage(string $image): string
     {
         return HOME . str_replace('\\', '/', json_decode($image, true)[0]['url']);
     }
