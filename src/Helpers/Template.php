@@ -89,7 +89,7 @@ class Template
         //        $this->smart->caching = true;
         //        $this->smart->cache_lifetime = 120;
 
-        $this->smart->setTemplateDir($this->folder ?? (defined('DEV') && defined('DOMINIO') && DEV && $this->library === DOMINIO ? "tpl" : "vendor/conn/{$this->library}/tpl"));
+        $this->smart->setTemplateDir($this->folder ?? (defined('DOMINIO') && $this->library === DOMINIO ? "public/tpl" : VENDOR . "{$this->library}/tpl"));
     }
 
     private function preData()
@@ -98,7 +98,6 @@ class Template
         $this->smart->assign("date", date("d/m/Y"));
         $this->smart->assign("year", date("Y"));
         $this->smart->assign("hora", date("H:i"));
-        $this->smart->assign("dev", defined("DEV") && DEV);
         if(defined('HOME')) $this->smart->assign("home", HOME);
         if(defined('PATH_HOME')) $this->smart->assign("path_home", PATH_HOME);
         if(defined('LOGO')) $this->smart->assign("logo", HOME . LOGO);
@@ -110,8 +109,8 @@ class Template
         if(defined('DOMINIO')) $this->smart->assign("dominio", DOMINIO);
 
 
-        if(defined('DEV') && file_exists(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.min.css")) {
-            $f = file_get_contents(PATH_HOME . "assets" . (DEV ? "Public" : "") . "/theme/theme.min.css");
+        if(file_exists(PATH_HOME . "assetsPublic/theme/theme.min.css")) {
+            $f = file_get_contents(PATH_HOME . "assetsPublic/theme/theme.min.css");
             $theme = explode(".theme{", $f)[1];
             $themeb = explode("!important", explode("background-color:", $theme)[1])[0];
             $themec = explode("!important", explode("color:", $theme)[1])[0];
