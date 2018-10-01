@@ -107,6 +107,7 @@ class Template
         if(defined('SITEDESC')) $this->smart->assign("sitedesc", SITEDESC);
         if(defined('VERSION')) $this->smart->assign("version", VERSION);
         if(defined('DOMINIO')) $this->smart->assign("dominio", DOMINIO);
+        if(defined('VENDOR')) $this->smart->assign("vendor", VENDOR);
 
 
         if(file_exists(PATH_HOME . "assetsPublic/theme/theme.min.css")) {
