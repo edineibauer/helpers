@@ -110,8 +110,8 @@ class Template
         if(defined('VENDOR')) $this->smart->assign("vendor", VENDOR);
 
 
-        if(file_exists(PATH_HOME . "assetsPublic/theme/theme.min.css")) {
-            $f = file_get_contents(PATH_HOME . "assetsPublic/theme/theme.min.css");
+        if(file_exists(PATH_HOME . "assetsPublic/theme.min.css")) {
+            $f = file_get_contents(PATH_HOME . "assetsPublic/theme.min.css");
             $theme = explode(".theme{", $f)[1];
             $themeb = explode("!important", explode("background-color:", $theme)[1])[0];
             $themec = explode("!important", explode("color:", $theme)[1])[0];
