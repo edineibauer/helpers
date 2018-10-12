@@ -74,6 +74,23 @@ class Helper
     }
 
     /**
+     * @param string $cep
+     * @return string
+     */
+    public static function cepAberto(string $cep)
+    {
+        if(defined("CEPABERTO")) {
+            $url = 'http://www.cepaberto.com/api/v3/cep?cep=' . $cep;
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Authorization: Token token="' . CEPABERTO . '"'));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            return curl_exec($ch);
+        }
+        return 'token CEP ABERTO não definido';
+    }
+
+    /**
      * Converte os valores no tipo string de um array nos tipos corretos dos valores
      * ex: convert "true" => true; "12" => 12
      *
