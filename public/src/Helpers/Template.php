@@ -168,13 +168,21 @@ class Template
 
         if (file_exists(PATH_HOME . "assetsPublic/theme.min.css")) {
             $f = file_get_contents(PATH_HOME . "assetsPublic/theme.min.css");
-            $theme = explode(".theme{", $f)[1];
-            $themeb = explode("!important", explode("background-color:", $theme)[1])[0];
-            $themec = explode("!important", explode("color:", $theme)[1])[0];
-            if (!empty($themeb))
-                $this->smart->assign("theme", $themeb);
-            if (!empty($themec))
-                $this->smart->assign("themeColor", $themec);
+            if(preg_match('/\.theme\{/i', $f)) {
+                $theme = explode(".theme{", $f)[1];
+                $themeb = explode("!important", explode("background-color:", $theme)[1])[0];
+                $themec = explode("!important", explode("color:", $theme)[1])[0];
+                if (!empty($themeb))
+                    $this->smart->assign("theme", $themeb);
+                if (!empty($themec))
+                    $this->smart->assign("themeColor", $themec);
+            } else {
+                $this->smart->assign("theme", "#2196f3");
+                $this->smart->assign("themeColor", "#ffffff");
+            }
+        } else {
+            $this->smart->assign("theme", "#2196f3");
+            $this->smart->assign("themeColor", "#ffffff");
         }
     }
 }
