@@ -80,7 +80,7 @@ class Template
     {
         if (empty($this->folder)) {
             if (!empty($this->library)) {
-                $base = (defined('DOMINIO') && $this->library === DOMINIO ? "public/tpl" : VENDOR . "{$this->library}/tpl");
+                $base = (defined('DOMINIO') && $this->library === DOMINIO ? "public/tpl" : VENDOR . "{$this->library}/public/tpl");
                 $this->checkTemplateExist($base, $template);
 
                 if (empty($this->folder)) {
