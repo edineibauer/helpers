@@ -105,12 +105,12 @@ class Template
                             if (empty($this->folder)) {
 
                                 //lib
-                                $base = VENDOR . "{$lib}/tpl";
+                                $base = VENDOR . "{$lib}/public/tpl";
                                 $this->checkTemplateExist($base, $template);
                                 if (empty($this->folder)) {
 
                                     //lib and login
-                                    $base = VENDOR . "{$lib}/tpl/" . $_SESSION['userlogin']['setor'];
+                                    $base = VENDOR . "{$lib}/public/tpl/" . $_SESSION['userlogin']['setor'];
                                     $this->checkTemplateExist($base, $template);
                                 }
                             }

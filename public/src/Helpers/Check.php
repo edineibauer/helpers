@@ -70,8 +70,8 @@ class Check
             $file = self::addNotShow(PATH_HOME, $option, $file);
 
         foreach (\Helpers\Helper::listFolder(PATH_HOME . "vendor/conn") as $lib) {
-            if (file_exists(PATH_HOME . "vendor/conn/{$lib}/entity/{$option}"))
-                $file = self::addNotShow(PATH_HOME . "vendor/conn/{$lib}/", $option, $file);
+            if (file_exists(PATH_HOME . "vendor/conn/{$lib}/public/entity/{$option}"))
+                $file = self::addNotShow(PATH_HOME . "vendor/conn/{$lib}/public/", $option, $file);
         }
 
         return $file;
