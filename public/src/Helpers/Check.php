@@ -169,18 +169,22 @@ class Check
      * @param STRING $Name = Uma string qualquer
      * @return STRING
      */
-    public static function name($Name)
+    public static function name(string $name, array $escape = [])
     {
-        self::$Format = array();
-        self::$Format['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr|"!@#$%&*()_-+={[}]/?;:.,\\\'<>°ºª¹²³£¢¬™®★’`§☆●•…”“’‘♥♡■◎≈◉';
-        self::$Format['b'] = "aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                                            ";
+        $f = array();
+        $f['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr|"!@#$%&*()_-+={[}]/?;:.,\\\'<>°ºª¹²³£¢¬™®★’`§☆●•…”“’‘♥♡■◎≈◉';
+        $f['b'] = "aaaaaaaceeeeiiiidnoooooouuuuuybsaaaaaaaceeeeiiiidnoooooouuuyybyRr                                                            ";
 
-        self::$Data = strtr(utf8_decode($Name), utf8_decode(self::$Format['a']), self::$Format['b']);
-        self::$Data = strip_tags(trim(self::$Data));
-        self::$Data = str_replace(' ', '-', self::$Data);
-        self::$Data = str_replace(array('-----', '----', '---', '--'), '-', self::$Data);
+        //escape some chars
+        if ($escape)
+            $f['a'] = str_replace($escape, "", $f['a']);
 
-        return str_replace('?', '-', utf8_decode(strtolower(utf8_encode(self::$Data))));
+        $data = strtr(utf8_decode($name), utf8_decode($f['a']), $f['b']);
+        $data = strip_tags(trim($data));
+        $data = str_replace(' ', '-', $data);
+        $data = str_replace(array('-----', '----', '---', '--'), '-', $data);
+
+        return str_replace('?', '-', utf8_decode(strtolower(utf8_encode($data))));
     }
 
     /**
