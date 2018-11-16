@@ -165,11 +165,11 @@ class Check
 
 
     /**
-     * <b>Tranforma URL:</b> Tranforma uma string no formato de URL amigável e retorna o a string convertida!
-     * @param STRING $Name = Uma string qualquer
-     * @return STRING
+     * @param string|null $name
+     * @param array $escape
+     * @return mixed
      */
-    public static function name(string $name, array $escape = [])
+    public static function name(string $name = null, array $escape = [])
     {
         $f = array();
         $f['a'] = 'ÀÁÂÃÄÅÆÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖØÙÚÛÜüÝÞßàáâãäåæçèéêëìíîïðñòóôõöøùúûýýþÿRr|"!@#$%&*()_-+={[}]/?;:.,\\\'<>°ºª¹²³£¢¬™®★’`§☆●•…”“’‘♥♡■◎≈◉';
