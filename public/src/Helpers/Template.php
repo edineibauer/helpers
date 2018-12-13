@@ -83,7 +83,7 @@ class Template
                 $base = (defined('DOMINIO') && $this->library === DOMINIO ? "public/tpl" : VENDOR . "{$this->library}/public/tpl");
                 $this->checkTemplateExist($base, $template);
 
-                if (empty($this->folder)) {
+                if (empty($this->folder) && !empty($_SESSION['userlogin']['setor'])) {
                     $base .= "/" . $_SESSION['userlogin']['setor'];
                     $this->checkTemplateExist($base, $template);
                 }
@@ -98,8 +98,10 @@ class Template
                 if (empty($this->folder)) {
 
                     //public login
-                    $base = "public/tpl/" . $_SESSION['userlogin']['setor'];
-                    $this->checkTemplateExist($base, $template);
+                    if (!empty($_SESSION['userlogin']['setor'])) {
+                        $base = "public/tpl/" . $_SESSION['userlogin']['setor'];
+                        $this->checkTemplateExist($base, $template);
+                    }
                     if (empty($this->folder)) {
                         foreach (Helper::listFolder(PATH_HOME . VENDOR) as $lib) {
                             if (empty($this->folder)) {
@@ -107,7 +109,7 @@ class Template
                                 //lib
                                 $base = VENDOR . "{$lib}/public/tpl";
                                 $this->checkTemplateExist($base, $template);
-                                if (empty($this->folder)) {
+                                if (empty($this->folder) && !empty($_SESSION['userlogin']['setor'])) {
 
                                     //lib and login
                                     $base = VENDOR . "{$lib}/public/tpl/" . $_SESSION['userlogin']['setor'];
@@ -129,7 +131,7 @@ class Template
     {
         if (file_exists(PATH_HOME . $dir . "/{$template}.tpl"))
             $this->folder = $dir;
-        elseif (file_exists(PATH_HOME . $dir . "/" . $_SESSION['userlogin']['setor'] . "/{$template}.tpl")) {
+        elseif (!empty($_SESSION['userlogin']['setor']) && file_exists(PATH_HOME . $dir . "/" . $_SESSION['userlogin']['setor'] . "/{$template}.tpl")) {
             $this->folder = $dir . "/" . $_SESSION['userlogin']['setor'];
         }
     }
@@ -168,7 +170,7 @@ class Template
 
         if (file_exists(PATH_HOME . "public/assets/theme.min.css")) {
             $f = file_get_contents(PATH_HOME . "public/assets/theme.min.css");
-            if(preg_match('/\.theme\{/i', $f)) {
+            if (preg_match('/\.theme\{/i', $f)) {
                 $theme = explode(".theme{", $f)[1];
                 $themeb = explode("!important", explode("background-color:", $theme)[1])[0];
                 $themec = explode("!important", explode("color:", $theme)[1])[0];
